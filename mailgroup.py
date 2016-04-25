@@ -86,7 +86,7 @@ def csv2dict(fpath, skipLines):
     for row in reader:
         key = row[0]
         if key in d:
-            # If there is a duplicate row in the dictionary, do not overwrite.
+            # If there is a duplicate key in the dictionary, do not overwrite.
             pass
         else:
             d[key] = row[1:]
