@@ -270,6 +270,7 @@ def dbcheck(index, groups, reportFlag):
                     outstr +='    '+ ' '.join(
                     [index['first name'][i][0], index['last name'][i][0]])+'\n'
 
+            ## Check for groups with no people
             noMemberWarnFlag = False
             for g in groups.keys():
                 # Search for this group in the index
