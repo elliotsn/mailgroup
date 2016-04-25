@@ -52,22 +52,17 @@ def usage():
     these are interpreted as field separators by most email clients and 
     interfaces.
     
-    Author: Elliot Sefton-Nash (e.sefton-nash@cosmos.esa.int)
+    Author: Elliot Sefton-Nash (e.sefton-nash@uclmail.net)
              
           """
-
-# Warn but don't exit.
-def warn(msg):   
-    import sys    
-    print >> sys.stderr, 'mailgroup: WARNING // '+msg
 
 
 def error(msg):
     import sys    
     print >> sys.stderr, 'mailgroup: ERROR // '+msg
     sys.exit()
-                   
-                         
+
+
 # Reads a csv file and returns one list per column.
 def csvgroup2dic(fpath):
     import csv
