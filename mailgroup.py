@@ -307,7 +307,7 @@ def dbquery(index, groups, db, inexpr):
         # This doesn't work when group names contain shorter group names.
         # outexpr = outexpr.replace(g, "db[:, groups['"+g+"'][-1]]")
         
-    # If it doesn't evaluate then the syntax is wrong.
+    # If it doesn't evaluate then the syntax is wrong or the group doesn't exist.
     try:
         exec('thisSet='+outexpr)
     except:
