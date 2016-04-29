@@ -1,4 +1,4 @@
-#!/usr/local/epd/anaconda/bin/python
+#!/usr/bin/env python
 #
 #
 # mailgroup.py -- Program to produce a string that can be pasted into a mail client. 
@@ -294,7 +294,13 @@ def dbcheck(index, groups, reportFlag):
             outstr+='\n'
             stdout.write(outstr)
     return db
-    
+
+# For a list, returns either first element or empty string if list is empty.
+def listFirstOrEmptyStr(inList):
+    if inList:
+        return inList[0]
+    else:
+        return ''
 
 # Query the database and return an ascii stream to stdout that can be pasted
 # into an email client.
@@ -324,9 +330,16 @@ def dbquery(index, groups, db, inexpr):
     nindex = len(index['email'])
     if any(thisSet):
         for i in range(nindex):
-            if thisSet[i]:
+            # Only add to the email string if the email address is present
+            if thisSet[i] & (len(index['email'][i]) > 0):
+                # Because fields are in lists, we must address the first element
+                # But this would produce an error when the list is empty
+                # So if the list is empty, substitute it for an empty string.
+                # Note that strip() is present to remove unecessary whitespace
+                # added by join when both first name and last name are empty.
                 outstr += \
-                ' '.join([index['first name'][i][0], index['last name'][i][0]])+\
+                ' '.join( [listFirstOrEmptyStr(index['first name'][i]),\
+                           listFirstOrEmptyStr(index['last name'][i]) ]).strip()+\
                 ' <'+index['email'][i][0]+'>, '
         # For last one, remove ', '
         outstr=outstr[:-2]+'\n'
