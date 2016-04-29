@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 #
-#
 # mailgroup.py -- Program to produce a string that can be pasted into a mail client. 
-#                 The string is a list of email addresses that is constructed from an 
-#                 Excel spreadsheet.
+#                 The string is a list of email addresses that is constructed from 
+#                 databases of .csv files.
 
 def usage():
     print """
@@ -53,22 +52,15 @@ def usage():
     these are interpreted as field separators by most email clients and 
     interfaces.
     
-    Author: Elliot Sefton-Nash (e.sefton-nash@cosmos.esa.int)
+    Author: Elliot Sefton-Nash (e.sefton-nash@uclmail.net)
              
           """
-
-# Warn but don't exit.
-def warn(msg):   
-    import sys    
-    print >> sys.stderr, 'mailgroup: WARNING // '+msg
-
 
 def error(msg):
     import sys    
     print >> sys.stderr, 'mailgroup: ERROR // '+msg
     sys.exit()
-                   
-                         
+
 # Reads a csv file and returns one list per column.
 def csvgroup2dic(fpath):
     import csv
@@ -92,7 +84,7 @@ def csv2dict(fpath, skipLines):
     for row in reader:
         key = row[0]
         if key in d:
-            # If there is a duplicate row in the dictionary, do not overwrite.
+            # If there is a duplicate key in the dictionary, do not overwrite.
             pass
         else:
             d[key] = row[1:]
@@ -276,6 +268,7 @@ def dbcheck(index, groups, reportFlag):
                     outstr +='    '+ ' '.join(
                     [index['first name'][i][0], index['last name'][i][0]])+'\n'
 
+            ## Check for groups with no people
             noMemberWarnFlag = False
             for g in groups.keys():
                 # Search for this group in the index
@@ -295,12 +288,14 @@ def dbcheck(index, groups, reportFlag):
             stdout.write(outstr)
     return db
 
+
 # For a list, returns either first element or empty string if list is empty.
 def listFirstOrEmptyStr(inList):
     if inList:
         return inList[0]
     else:
         return ''
+
 
 # Query the database and return an ascii stream to stdout that can be pasted
 # into an email client.
@@ -319,7 +314,7 @@ def dbquery(index, groups, db, inexpr):
         # This doesn't work when group names contain shorter group names.
         # outexpr = outexpr.replace(g, "db[:, groups['"+g+"'][-1]]")
         
-    # If it doesn't evaluate then the syntax is wrong.
+    # If it doesn't evaluate then the syntax is wrong or the group doesn't exist.
     try:
         exec('thisSet='+outexpr)
     except:
@@ -330,6 +325,7 @@ def dbquery(index, groups, db, inexpr):
     nindex = len(index['email'])
     if any(thisSet):
         for i in range(nindex):
+
             # Only add to the email string if the email address is present
             if thisSet[i] & (len(index['email'][i]) > 0):
                 # Because fields are in lists, we must address the first element
