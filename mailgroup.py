@@ -3,7 +3,7 @@
 # mailgroup.py -- Program to produce a string that can be pasted into a mail client. 
 #                 The string is a list of email addresses that is constructed from 
 #                 databases of .csv files.
-
+#
 def usage():
     print """
     ******************
