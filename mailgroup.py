@@ -1,4 +1,4 @@
-#!/usr/local/epd/anaconda/bin/python
+#!/usr/bin/env python
 #
 #
 # mailgroup.py -- Program to produce a string that can be pasted into a mail client. 
