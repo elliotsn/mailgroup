@@ -32,7 +32,9 @@ def usage():
     
     [GROUPS]   is a logical expression built using the logical operators & | ~ 
             and parentheses (), as well as group names that exist in 
-            the GROUP_LIST file.
+            the GROUP_LIST file. Note that if the expression contains operators
+            that are interpreted by the shell then the expression should be 
+            enclosed in quotes (e.g. 'GROUP1&GROUP2' ).
             
     If no arguments or the wrong number of arguments are passed then this 
     message is returned.
