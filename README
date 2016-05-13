@@ -44,4 +44,12 @@
   these are interpreted as field separators by most email clients and
   interfaces.
 
+  If you want to always use mailgroup with the same database, you can use an
+  alias, then for a summary you just need enter mailgroup, or for a mailing
+  list you only need provide the group expression.
+  
+  E.g. in ~/.bashrc:
+    alias mailgroup='/usr/bin/mailgroup.py path2MyIndex.csv path2MyGroups.csv'
+
   Author: Elliot Sefton-Nash (e.sefton-nash@uclmail.net)
+
